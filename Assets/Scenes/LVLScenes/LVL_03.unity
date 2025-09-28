@@ -2633,7 +2633,7 @@ PrefabInstance:
     - target: {fileID: 1983508234407246006, guid: 2565eae3239e38b4e8aa24a17df123e5,
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: RestartFromWinOrGameOver
+      value: NewGame
       objectReference: {fileID: 0}
     - target: {fileID: 3226738142920782710, guid: 2565eae3239e38b4e8aa24a17df123e5,
         type: 3}

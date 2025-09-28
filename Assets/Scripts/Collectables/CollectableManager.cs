@@ -10,8 +10,8 @@ public class CollectableManager : MonoBehaviour
     [SerializeField] private UnityEvent _onCollectedall;
     [SerializeField] private UnityEvent _onCollected;
 
-    public List<Collectable> _collectablesInScene { get; private set; }
-    public List<Collectable> _playerCollectables { get; private set; } = new List<Collectable>();
+    public List<Item> _collectablesInScene { get; private set; }
+    public List<Item> _playerCollectables { get; private set; } = new List<Item>();
     public int _totalCollectables { get; private set; }
 
     private void Awake()
@@ -26,7 +26,7 @@ public class CollectableManager : MonoBehaviour
 
     private void Start()
     {
-        _collectablesInScene = new List<Collectable>(FindObjectsOfType<Collectable>());
+        _collectablesInScene = new List<Item>(FindObjectsOfType<Item>());
         _totalCollectables = _collectablesInScene.Count;
 
         SaveData data = SaveManager.LoadGame();
@@ -35,7 +35,7 @@ public class CollectableManager : MonoBehaviour
             // Rimuovi quelli già raccolti
             foreach (string id in data.collectedIDs)
             {
-                Collectable c = _collectablesInScene.Find(x => x.HasID(id));
+                Item c = _collectablesInScene.Find(x => x.UniqueID==id);
                 if (c != null)
                 {
                     _collectablesInScene.Remove(c);
@@ -51,7 +51,7 @@ public class CollectableManager : MonoBehaviour
             _finishPoint.SetActive(true);
     }
 
-    public void TakeCollectable(Collectable collectable)
+    public void TakeCollectable(Item collectable)
     {
         if (_collectablesInScene.Contains(collectable))
         {

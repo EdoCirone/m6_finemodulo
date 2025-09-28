@@ -198,6 +198,11 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 5712208692097286177, guid: af3fe34da2ad9ff48a595dc441b130da,
+        type: 3}
+      propertyPath: m_text
+      value: Restart Game
+      objectReference: {fileID: 0}
     - target: {fileID: 6823487183044356515, guid: af3fe34da2ad9ff48a595dc441b130da,
         type: 3}
       propertyPath: m_AnchorMax.y
