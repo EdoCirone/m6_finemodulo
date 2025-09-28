@@ -9,7 +9,13 @@ public class GameManager : MonoBehaviour
 
     [Header("Vite globali (valore iniziale)")]
     [SerializeField] private int startingLives = 3;
+
+    [Header("DEBUG – Vite attuali (solo lettura)")]
+    [SerializeField] private int debugCurrentLives; // mostrato solo per debug
+
+
     public int CurrentLives { get; private set; }
+
 
     public event Action<int> OnLivesChanged;
 
@@ -30,6 +36,7 @@ public class GameManager : MonoBehaviour
     private void SetLives(int value)
     {
         CurrentLives = Mathf.Max(0, value);
+        debugCurrentLives = CurrentLives;
         OnLivesChanged?.Invoke(CurrentLives);
     }
 
@@ -42,11 +49,6 @@ public class GameManager : MonoBehaviour
     public void LoseLife(int amount = 1)
     {
         SetLives(CurrentLives - Mathf.Max(0, amount));
-        if (CurrentLives <= 0)
-        {
-            // Game over globale: torna al menu e resetta per la prossima partita
-            ResetLivesForNewGame();
-            SceneLoader.Instance.LoadMainMenu();
-        }
+       
     }
 }

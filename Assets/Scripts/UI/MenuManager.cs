@@ -55,6 +55,9 @@ public class MenuManager : MonoBehaviour
     // Collegamento Al DOn't destroy
     public void RestartLevel()
     {
+        if (GameManager.Instance != null)
+            GameManager.Instance.ResetLivesForNewGame(); // riparti con vite piene
+
         if (SceneLoader.Instance != null)
             SceneLoader.Instance.RestartLevel();
     }

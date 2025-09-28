@@ -43,7 +43,7 @@ public class UIManager : MonoBehaviour
         if (_lifePanel == null) _lifePanel = FindObjectOfType<UI_LifePanel>();
         if (_timerPanel == null) _timerPanel = FindObjectOfType<UI_Timer>();
 
-        // Ripubblica lo stato attuale delle vite
+        // Sync immediato vite dopo il restart livello
         if (GameManager.Instance != null)
             UpdateLives(GameManager.Instance.CurrentLives);
     }
