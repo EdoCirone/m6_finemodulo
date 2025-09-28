@@ -5,6 +5,7 @@ public class SaveData
 {
     public int currentLevelIndex;
     public int currentLives;
+    public int livesAtLevelStart;
     public bool isDead;
     public float[] checkpointPos;
 

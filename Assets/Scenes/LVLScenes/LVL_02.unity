@@ -819,7 +819,7 @@ PrefabInstance:
     - target: {fileID: 8493573890118386328, guid: 70dd7e2b779af7147b50692c224367db,
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: RestartAfterWin
+      value: RestartFromWinOrGameOver
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -2135,7 +2135,7 @@ PrefabInstance:
     - target: {fileID: 6606374442009015161, guid: 20fa9e48a61d25141a82a188180e087c,
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: RestartAfterWin
+      value: RestartFromPause
       objectReference: {fileID: 0}
     - target: {fileID: 7636204932118125577, guid: 20fa9e48a61d25141a82a188180e087c,
         type: 3}
@@ -2526,7 +2526,7 @@ PrefabInstance:
     - target: {fileID: 1983508234407246006, guid: 2565eae3239e38b4e8aa24a17df123e5,
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: RestartLevel
+      value: RestartFromWinOrGameOver
       objectReference: {fileID: 0}
     - target: {fileID: 3226738142920782710, guid: 2565eae3239e38b4e8aa24a17df123e5,
         type: 3}

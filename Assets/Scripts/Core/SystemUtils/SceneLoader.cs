@@ -50,12 +50,11 @@ public class SceneLoader : MonoBehaviour
 
         var data = SaveManager.LoadGame() ?? new SaveData();
 
-        // Salva livello e vite
         data.currentLevelIndex = SceneManager.GetActiveScene().buildIndex;
         data.currentLives = GameManager.Instance.CurrentLives;
+        data.livesAtLevelStart = data.livesAtLevelStart == 0 ? GameManager.Instance.CurrentLives : data.livesAtLevelStart; // mantieni quello già registrato se c’è
         data.isDead = false;
 
-        // Salva checkpoint
         if (CheckpointManager.Instance.HasCheckpoint())
         {
             Vector3 cpPos = CheckpointManager.Instance.GetCurrentCheckpoint().position;
@@ -65,6 +64,7 @@ public class SceneLoader : MonoBehaviour
         SaveManager.SaveGame(data);
         SceneManager.LoadScene("MainMenu");
     }
+
 
     public void LoadCreditsMenu()
     {
@@ -107,6 +107,16 @@ public class SceneLoader : MonoBehaviour
 
         if (index >= 0 && index < SceneManager.sceneCountInBuildSettings)
         {
+            // Prepara il SaveData
+            SaveData data = SaveManager.LoadGame() ?? new SaveData();
+            data.currentLevelIndex = index;
+            data.currentLives = GameManager.Instance.CurrentLives;
+
+            // Salva anche le vite iniziali del livello
+            data.livesAtLevelStart = GameManager.Instance.CurrentLives;
+
+            SaveManager.SaveGame(data);
+
             SceneManager.LoadScene(index);
         }
         else
@@ -114,6 +124,7 @@ public class SceneLoader : MonoBehaviour
             Debug.LogWarning($"Indice scena {index} non valido!");
         }
     }
+
 
     public void NewGame()
     {

@@ -53,23 +53,39 @@ public class MenuManager : MonoBehaviour
     }
 
     // Collegamento Al DOn't destroy
-    public void RestartLevel()
+    public void RestartFromPause()
     {
-        // Restart dal GameOver vite piene, pickup rimossi rimangono rimossi
-        if (GameManager.Instance != null)
-            GameManager.Instance.ResetLivesForNewGame();
+        SaveData data = SaveManager.LoadGame() ?? new SaveData();
+
+        // vite di inizio livello
+        GameManager.Instance.SetLivesFromSave(data.livesAtLevelStart);
+
+        // reset pickup e checkpoint
+        data.collectedIDs = null;
+        data.checkpointPos = null;
+
+        SaveManager.SaveGame(data);
 
         SceneLoader.Instance.RestartLevel();
     }
 
-    public void RestartAfterWin()
+    public void RestartFromWinOrGameOver()
     {
-        // Restart dopo aver vinto reset totale, pickup respawnano
-        if (GameManager.Instance != null)
-            GameManager.Instance.ResetLivesForNewGame();
+        SaveData data = SaveManager.LoadGame() ?? new SaveData();
 
-        SceneLoader.Instance.RestartLevel(clearSave: true);
+        // mantieni vite correnti
+        data.currentLives = GameManager.Instance.CurrentLives;
+        data.livesAtLevelStart = GameManager.Instance.CurrentLives;
+
+        // reset pickup e checkpoint
+        data.collectedIDs = null;
+        data.checkpointPos = null;
+
+        SaveManager.SaveGame(data);
+
+        SceneLoader.Instance.RestartLevel();
     }
+
 
     public void NextLevel()
     {
