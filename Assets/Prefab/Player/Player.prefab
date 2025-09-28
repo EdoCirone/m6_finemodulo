@@ -17,6 +17,7 @@ GameObject:
   - component: {fileID: 7224566789502687679}
   - component: {fileID: 5314075509300511480}
   - component: {fileID: 1787690594415691884}
+  - component: {fileID: 312222366226601599}
   m_Layer: 6
   m_Name: Player
   m_TagString: Player
@@ -143,8 +144,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 25a5d642f0688be47a6bdebf83f1acf0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _maxHp: 5
-  _hp: 0
   _onDeath:
     m_PersistentCalls:
       m_Calls:
@@ -258,6 +257,33 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &312222366226601599
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 539360416816311778}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: df6e6fa1a83f02145b3b12c191c10f08, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _onEscape:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 0}
+        m_TargetAssemblyTypeName: 
+        m_MethodName: 
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: 
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &1269886297959114664
 GameObject:
   m_ObjectHideFlags: 0
