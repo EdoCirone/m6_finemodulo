@@ -1,4 +1,4 @@
-using System.Collections;
+﻿using System.Collections;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -16,11 +16,18 @@ public class SceneLoader : MonoBehaviour
         Instance = this;
     }
 
-    public void RestartLevel()
+   public void RestartLevel(bool clearSave = false)
+{
+    Time.timeScale = 1f;
+
+    if (clearSave)
     {
-        Time.timeScale = 1f;
-        StartCoroutine(ResetSceneCoroutine());
+        // elimino il salvataggio per far respawnare i pickup
+        SaveManager.DeleteSave();
     }
+
+    StartCoroutine(ResetSceneCoroutine());
+}
 
     private IEnumerator ResetSceneCoroutine()
     {
@@ -41,22 +48,21 @@ public class SceneLoader : MonoBehaviour
     {
         Time.timeScale = 1f;
 
-        SaveData data = new SaveData
-        {
-            currentLevelIndex = SceneManager.GetActiveScene().buildIndex,
-            currentLives = GameManager.Instance.CurrentLives,
-            isDead = false
-        };
+        var data = SaveManager.LoadGame() ?? new SaveData();
 
-        // Se hai un checkpoint salvato
+        // Salva livello e vite
+        data.currentLevelIndex = SceneManager.GetActiveScene().buildIndex;
+        data.currentLives = GameManager.Instance.CurrentLives;
+        data.isDead = false;
+
+        // Salva checkpoint
         if (CheckpointManager.Instance.HasCheckpoint())
         {
-            Vector3 cpPos = CheckpointManager.Instance.GetCurrentCheckpoint().transform.position;
+            Vector3 cpPos = CheckpointManager.Instance.GetCurrentCheckpoint().position;
             data.checkpointPos = new float[] { cpPos.x, cpPos.y, cpPos.z };
         }
 
         SaveManager.SaveGame(data);
-
         SceneManager.LoadScene("MainMenu");
     }
 

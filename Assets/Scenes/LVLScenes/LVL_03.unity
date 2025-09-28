@@ -596,6 +596,11 @@ PrefabInstance:
       propertyPath: _manager
       value: 
       objectReference: {fileID: 0}
+    - target: {fileID: 9122151213663479224, guid: e894db6c67e3e7d42be3484c91d38007,
+        type: 3}
+      propertyPath: uniqueID
+      value: Coins3
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -1249,6 +1254,11 @@ PrefabInstance:
         type: 3}
       propertyPath: _manager
       value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 9122151213663479224, guid: e894db6c67e3e7d42be3484c91d38007,
+        type: 3}
+      propertyPath: uniqueID
+      value: Coins6
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -2216,7 +2226,7 @@ PrefabInstance:
     - target: {fileID: 6606374442009015161, guid: 20fa9e48a61d25141a82a188180e087c,
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: RestartLevel
+      value: RestartAfterWin
       objectReference: {fileID: 0}
     - target: {fileID: 7636204932118125577, guid: 20fa9e48a61d25141a82a188180e087c,
         type: 3}
@@ -3320,6 +3330,11 @@ PrefabInstance:
       propertyPath: _manager
       value: 
       objectReference: {fileID: 0}
+    - target: {fileID: 9122151213663479224, guid: e894db6c67e3e7d42be3484c91d38007,
+        type: 3}
+      propertyPath: uniqueID
+      value: Coins4
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -3398,6 +3413,11 @@ PrefabInstance:
         type: 3}
       propertyPath: _manager
       value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 9122151213663479224, guid: e894db6c67e3e7d42be3484c91d38007,
+        type: 3}
+      propertyPath: uniqueID
+      value: Coins5
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -3695,7 +3715,7 @@ PrefabInstance:
     - target: {fileID: 8535160893976445152, guid: 7ca2fe7a7c0e0bf47b61767253dd9fbb,
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: RestartLevel
+      value: RestartAfterWin
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

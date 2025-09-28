@@ -866,6 +866,11 @@ PrefabInstance:
       propertyPath: _manager
       value: 
       objectReference: {fileID: 0}
+    - target: {fileID: 9122151213663479224, guid: e894db6c67e3e7d42be3484c91d38007,
+        type: 3}
+      propertyPath: uniqueID
+      value: Coin1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -1874,6 +1879,11 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 932622811}
+    - target: {fileID: 6606374442009015161, guid: 20fa9e48a61d25141a82a188180e087c,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: RestartAfterWin
+      objectReference: {fileID: 0}
     - target: {fileID: 7636204932118125577, guid: 20fa9e48a61d25141a82a188180e087c,
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
@@ -2657,6 +2667,11 @@ PrefabInstance:
       propertyPath: m_Mesh
       value: 
       objectReference: {fileID: 1266191787}
+    - target: {fileID: 4017569784540096380, guid: 2d972acd5a6f72a48a0095e416cef047,
+        type: 3}
+      propertyPath: m_VersionIndex
+      value: 30
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -3561,7 +3576,7 @@ PrefabInstance:
     - target: {fileID: 8493573890118386328, guid: 70dd7e2b779af7147b50692c224367db,
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: RestartLevel
+      value: RestartAfterWin
       objectReference: {fileID: 0}
     - target: {fileID: 8493573890118386328, guid: 70dd7e2b779af7147b50692c224367db,
         type: 3}

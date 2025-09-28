@@ -55,11 +55,20 @@ public class MenuManager : MonoBehaviour
     // Collegamento Al DOn't destroy
     public void RestartLevel()
     {
+        // Restart dal GameOver vite piene, pickup rimossi rimangono rimossi
         if (GameManager.Instance != null)
-            GameManager.Instance.ResetLivesForNewGame(); // riparti con vite piene
+            GameManager.Instance.ResetLivesForNewGame();
 
-        if (SceneLoader.Instance != null)
-            SceneLoader.Instance.RestartLevel();
+        SceneLoader.Instance.RestartLevel();
+    }
+
+    public void RestartAfterWin()
+    {
+        // Restart dopo aver vinto reset totale, pickup respawnano
+        if (GameManager.Instance != null)
+            GameManager.Instance.ResetLivesForNewGame();
+
+        SceneLoader.Instance.RestartLevel(clearSave: true);
     }
 
     public void NextLevel()
@@ -107,7 +116,7 @@ public class MenuManager : MonoBehaviour
         if (data.checkpointPos != null && data.checkpointPos.Length == 3)
         {
             Vector3 savedPos = new Vector3(data.checkpointPos[0], data.checkpointPos[1], data.checkpointPos[2]);
-            CheckpointManager.Instance.SetPendingCheckpoint(savedPos);
+            CheckpointManager.SetPendingForNextLoad(savedPos, levelToLoad);
         }
 
         SceneLoader.Instance.LoadLevelByIndex(levelToLoad);

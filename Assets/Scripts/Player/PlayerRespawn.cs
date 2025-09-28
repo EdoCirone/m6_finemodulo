@@ -1,4 +1,4 @@
-using UnityEngine;
+﻿using UnityEngine;
 
 public class PlayerRespawn : MonoBehaviour, IRespawnable
 {
@@ -10,6 +10,13 @@ public class PlayerRespawn : MonoBehaviour, IRespawnable
     private void Start()
     {
         _startPosition = _customStartPoint != null ? _customStartPoint : transform;
+
+        // Se c’è già un checkpoint attivo nel manager usalo subito
+        if (CheckpointManager.Instance != null && CheckpointManager.Instance.HasCheckpoint())
+        {
+            SetSpawnPoint(CheckpointManager.Instance.GetCurrentCheckpoint());
+            transform.position = _spawnPoint.position; // ti sposta direttamente lì
+        }
     }
 
     public void SetSpawnPoint(Transform point)
@@ -27,7 +34,7 @@ public class PlayerRespawn : MonoBehaviour, IRespawnable
         {
             rb.velocity = Vector3.zero;
             rb.angularVelocity = Vector3.zero;
-            rb.Sleep();// forza il reset completo del rigidbody
+            rb.Sleep(); // reset completo del rigidbody
         }
     }
 }

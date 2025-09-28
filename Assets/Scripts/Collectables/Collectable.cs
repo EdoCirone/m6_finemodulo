@@ -1,22 +1,33 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class Collectable : MonoBehaviour
 {
-    [SerializeField] CollectableManager _manager;
-    [SerializeField] private LayerMask _playerLayer;
+    [SerializeField] string uniqueID;
 
-    private void Awake()
+    public string GetID() => uniqueID;
+    public bool HasID(string id) => uniqueID == id;
+
+    private void Start()
     {
-        _manager = FindAnyObjectByType<CollectableManager>();
-    }
-    private void OnTriggerEnter(Collider other)
-    {
-        if (((1 << other.gameObject.layer) & _playerLayer) != 0)
+        SaveData data = SaveManager.LoadGame();
+        if (data != null && data.collectedIDs != null && System.Array.Exists(data.collectedIDs, id => id == uniqueID))
         {
-            _manager.TakeCollectable(this);
             Destroy(gameObject);
         }
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        CollectableManager.Instance.TakeCollectable(this);
+
+        SaveData data = SaveManager.LoadGame() ?? new SaveData();
+        var list = new System.Collections.Generic.List<string>();
+        if (data.collectedIDs != null) list.AddRange(data.collectedIDs);
+        if (!list.Contains(uniqueID)) list.Add(uniqueID);
+        data.collectedIDs = list.ToArray();
+
+        SaveManager.SaveGame(data);
+
+        Destroy(gameObject);
     }
 }
