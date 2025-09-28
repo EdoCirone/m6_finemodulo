@@ -111,22 +111,23 @@ public class MenuManager : MonoBehaviour
         SaveData data = SaveManager.LoadGame();
         if (data == null)
         {
+            // Nessun salvataggio → nuova partita
+            NewGame();
+            return;
+        }
+
+        // Se il salvataggio è morto considera come "nessun salvataggio valido"
+        if (data.isDead || data.currentLives <= 0)
+        {
+            Debug.Log("Il salvataggio era in stato di GameOver. Avvio nuova partita.");
             NewGame();
             return;
         }
 
         int levelToLoad = data.currentLevelIndex;
 
-        if (data.isDead)
-        {
-            // Se il salvataggio era in stato di morte  riparti con vite piene
-            GameManager.Instance.ResetLivesForNewGame();
-        }
-        else
-        {
-            // Se invece hai completato il livello  riparti con le vite rimaste
-            GameManager.Instance.SetLivesFromSave(data.currentLives);
-        }
+        // Imposta vite correnti
+        GameManager.Instance.SetLivesFromSave(data.currentLives);
 
         // Prepara eventuale checkpoint salvato
         if (data.checkpointPos != null && data.checkpointPos.Length == 3)
