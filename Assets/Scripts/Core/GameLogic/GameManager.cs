@@ -1,0 +1,52 @@
+using System;
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class GameManager : MonoBehaviour
+{
+    public static GameManager Instance { get; private set; }
+
+    [Header("Vite globali (valore iniziale)")]
+    [SerializeField] private int startingLives = 3;
+    public int CurrentLives { get; private set; }
+
+    public event Action<int> OnLivesChanged;
+
+    private void Awake()
+    {
+        if (Instance != null && Instance != this)
+        {
+            Destroy(gameObject);
+            return;
+        }
+
+        Instance = this;
+        DontDestroyOnLoad(gameObject);
+
+        ResetLivesForNewGame(); // all'avvio parti con le vite piene
+    }
+
+    private void SetLives(int value)
+    {
+        CurrentLives = Mathf.Max(0, value);
+        OnLivesChanged?.Invoke(CurrentLives);
+    }
+
+    public void ResetLivesForNewGame() => SetLives(startingLives);
+    public void SetLivesFromSave(int value) => SetLives(value);
+
+    public void AddLife(int amount = 1) => SetLives(CurrentLives + Mathf.Max(0, amount));
+
+    // NON riavvio i livelli qui ma nel LifeController
+    public void LoseLife(int amount = 1)
+    {
+        SetLives(CurrentLives - Mathf.Max(0, amount));
+        if (CurrentLives <= 0)
+        {
+            // Game over globale: torna al menu e resetta per la prossima partita
+            ResetLivesForNewGame();
+            SceneLoader.Instance.LoadMainMenu();
+        }
+    }
+}
