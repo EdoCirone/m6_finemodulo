@@ -44,26 +44,31 @@ public class SceneLoader : MonoBehaviour
             FindObjectOfType<CameraManager>()?.SetPlayer(playerGO.transform);
     }
 
-    public void LoadMainMenu()
+    public void LoadMainMenu(bool? markDead = null)
     {
         Time.timeScale = 1f;
 
         var data = SaveManager.LoadGame() ?? new SaveData();
 
-        data.currentLevelIndex = SceneManager.GetActiveScene().buildIndex;
+        // aggiorna info base
+        data.currentLevelIndex = UnityEngine.SceneManagement.SceneManager.GetActiveScene().buildIndex;
         data.currentLives = GameManager.Instance.CurrentLives;
-        data.livesAtLevelStart = data.livesAtLevelStart == 0 ? GameManager.Instance.CurrentLives : data.livesAtLevelStart; // mantieni quello già registrato se c’è
-        data.isDead = false;
 
-        if (CheckpointManager.Instance.HasCheckpoint())
+        // se ti dico esplicitamente cosa fare con isDead, fallo; altrimenti preserva
+        if (markDead.HasValue)
+            data.isDead = markDead.Value;
+
+        // salva il checkpoint se presente
+        if (CheckpointManager.Instance != null && CheckpointManager.Instance.HasCheckpoint())
         {
             Vector3 cpPos = CheckpointManager.Instance.GetCurrentCheckpoint().position;
             data.checkpointPos = new float[] { cpPos.x, cpPos.y, cpPos.z };
         }
 
         SaveManager.SaveGame(data);
-        SceneManager.LoadScene("MainMenu");
+        UnityEngine.SceneManagement.SceneManager.LoadScene("MainMenu");
     }
+
 
 
     public void LoadCreditsMenu()

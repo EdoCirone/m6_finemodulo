@@ -2061,7 +2061,7 @@ PrefabInstance:
     - target: {fileID: 1136380162766241567, guid: 20fa9e48a61d25141a82a188180e087c,
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: BackToMenu
+      value: BackToMenuFromPause
       objectReference: {fileID: 0}
     - target: {fileID: 1136380162766241567, guid: 20fa9e48a61d25141a82a188180e087c,
         type: 3}
@@ -2678,7 +2678,7 @@ PrefabInstance:
     - target: {fileID: 5759368401109005520, guid: 2565eae3239e38b4e8aa24a17df123e5,
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: BackToMenu
+      value: BackToMenuFromGameOver
       objectReference: {fileID: 0}
     - target: {fileID: 7651926947598401801, guid: 2565eae3239e38b4e8aa24a17df123e5,
         type: 3}
@@ -3645,7 +3645,7 @@ PrefabInstance:
     - target: {fileID: 2457081579127983238, guid: 7ca2fe7a7c0e0bf47b61767253dd9fbb,
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: BackToMenu
+      value: BackToMenuFromPause
       objectReference: {fileID: 0}
     - target: {fileID: 4698240230851693344, guid: 7ca2fe7a7c0e0bf47b61767253dd9fbb,
         type: 3}

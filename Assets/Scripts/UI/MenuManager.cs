@@ -93,11 +93,18 @@ public class MenuManager : MonoBehaviour
             SceneLoader.Instance.LoadNextLevel();
     }
 
-    public void BackToMenu()
+    public void BackToMenuFromPause()
     {
-        if (SceneLoader.Instance != null)
-            SceneLoader.Instance.LoadMainMenu();
+        // qui esplicito che NON è game over
+        SceneLoader.Instance.LoadMainMenu(markDead: false);
     }
+
+    public void BackToMenuFromGameOver()
+    {
+        // qui stabilisco che è un salvataggio morto
+        SceneLoader.Instance.LoadMainMenu(markDead: true);
+    }
+
 
     public void NewGame()
     {
@@ -109,27 +116,21 @@ public class MenuManager : MonoBehaviour
     public void ContinueGame()
     {
         SaveData data = SaveManager.LoadGame();
-        if (data == null)
-        {
-            // Nessun salvataggio → nuova partita
-            NewGame();
-            return;
-        }
 
-        // Se il salvataggio è morto considera come "nessun salvataggio valido"
-        if (data.isDead || data.currentLives <= 0)
+        // nessun save o save "morto" => comportati come NewGame
+        if (data == null || data.isDead || data.currentLives <= 0)
         {
-            Debug.Log("Il salvataggio era in stato di GameOver. Avvio nuova partita.");
+            Debug.Log("Nessun salvataggio valido (o GameOver). Avvio nuova partita.");
             NewGame();
             return;
         }
 
         int levelToLoad = data.currentLevelIndex;
 
-        // Imposta vite correnti
+        // vite dal save valido
         GameManager.Instance.SetLivesFromSave(data.currentLives);
 
-        // Prepara eventuale checkpoint salvato
+        // ripristina eventuale checkpoint
         if (data.checkpointPos != null && data.checkpointPos.Length == 3)
         {
             Vector3 savedPos = new Vector3(data.checkpointPos[0], data.checkpointPos[1], data.checkpointPos[2]);

@@ -105,14 +105,12 @@ public class LifeController : MonoBehaviour
             GameManager.Instance.LoseLife(1);
 
         // Dopo la caduta → SEMPRE Game Over
-        SaveGameOverState();
+        SaveGameOverState(forceDead: true);
         MenuManager.Instance.ShowGameOverMenu();
     }
 
-    /// <summary>
-    /// Salva lo stato di Game Over (vite finite o caduta)
-    /// </summary>
-    private void SaveGameOverState()
+
+    private void SaveGameOverState(bool forceDead = false)
     {
         if (GameManager.Instance != null)
         {
@@ -120,7 +118,8 @@ public class LifeController : MonoBehaviour
             {
                 currentLevelIndex = SceneManager.GetActiveScene().buildIndex,
                 currentLives = GameManager.Instance.CurrentLives,
-                isDead = true
+                // se forceDead è true, o se le vite sono finite, segna come morto
+                isDead = forceDead || GameManager.Instance.CurrentLives <= 0
             };
 
             if (CheckpointManager.Instance.HasCheckpoint())
