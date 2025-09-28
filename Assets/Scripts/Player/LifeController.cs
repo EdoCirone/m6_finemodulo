@@ -1,10 +1,10 @@
 ﻿using System.Collections;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.SceneManagement;
 
 public class LifeController : MonoBehaviour
 {
-
     [SerializeField] private UnityEvent _onDeath;
     [SerializeField] private UnityEvent _onFallDeath;
     [SerializeField] private UnityEvent _onHit;
@@ -17,7 +17,6 @@ public class LifeController : MonoBehaviour
     [SerializeField] private float _fallDeathPauseDuration = 0.2f;
 
     private bool _isDead = false;
-
     private IRespawnable _respawnable;
 
     private void Start()
@@ -37,7 +36,7 @@ public class LifeController : MonoBehaviour
         }
     }
 
-    public void AddHp(int hp) 
+    public void AddHp(int hp)
     {
         if (_isDead) return;
         if (GameManager.Instance != null)
@@ -47,7 +46,7 @@ public class LifeController : MonoBehaviour
         }
     }
 
-    public void RemoveHp(int hp) // diventa "perdi una vita" e respawn se >0
+    public void RemoveHp(int hp)
     {
         if (_isDead) return;
 
@@ -85,10 +84,10 @@ public class LifeController : MonoBehaviour
         }
         else
         {
+            SaveGameOverState();
             MenuManager.Instance.ShowGameOverMenu();
         }
     }
-
 
     private void DieForFalling()
     {
@@ -105,11 +104,32 @@ public class LifeController : MonoBehaviour
         if (GameManager.Instance != null)
             GameManager.Instance.LoseLife(1);
 
-        // Dopo la caduta → SEMPRE Game Over Menu
+        // Dopo la caduta → SEMPRE Game Over
+        SaveGameOverState();
         MenuManager.Instance.ShowGameOverMenu();
     }
 
+    /// <summary>
+    /// Salva lo stato di Game Over (vite finite o caduta)
+    /// </summary>
+    private void SaveGameOverState()
+    {
+        if (GameManager.Instance != null)
+        {
+            SaveData data = new SaveData
+            {
+                currentLevelIndex = SceneManager.GetActiveScene().buildIndex,
+                currentLives = GameManager.Instance.CurrentLives,
+                isDead = true
+            };
 
+            if (CheckpointManager.Instance.HasCheckpoint())
+            {
+                Vector3 cpPos = CheckpointManager.Instance.GetCurrentCheckpoint().position;
+                data.checkpointPos = new float[] { cpPos.x, cpPos.y, cpPos.z };
+            }
+
+            SaveManager.SaveGame(data);
+        }
+    }
 }
-
-

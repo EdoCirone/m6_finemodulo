@@ -5,6 +5,7 @@ public class CheckpointManager : MonoBehaviour
     public static CheckpointManager Instance { get; private set; }
 
     private Transform _currentCheckpoint;
+    private Vector3? pendingCheckpoint = null;
 
     private void Awake()
     {
@@ -15,6 +16,23 @@ public class CheckpointManager : MonoBehaviour
         }
 
         Instance = this;
+    }
+
+    private void Start()
+    {
+        if (pendingCheckpoint.HasValue)
+        {
+            // crea un "finto" checkpoint alla posizione salvata
+            GameObject cp = new GameObject("LoadedCheckpoint");
+            cp.transform.position = pendingCheckpoint.Value;
+            _currentCheckpoint = cp.transform;
+            pendingCheckpoint = null;
+        }
+    }
+
+    public void SetPendingCheckpoint(Vector3 pos)
+    {
+        pendingCheckpoint = pos;
     }
 
     public void SetCheckpoint(Transform checkpoint)
@@ -28,6 +46,5 @@ public class CheckpointManager : MonoBehaviour
         return _currentCheckpoint;
     }
 
-    //Metodo necessario per il controllo in LifeController
     public bool HasCheckpoint() => _currentCheckpoint != null;
 }

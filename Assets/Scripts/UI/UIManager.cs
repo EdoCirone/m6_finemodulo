@@ -33,7 +33,11 @@ public class UIManager : MonoBehaviour
     public void ResetUI()
     {
         _coinPanel?.UpdateCoinGraphics(0, 0);
-        UpdateLives(0);
+        if (GameManager.Instance != null)
+            UpdateLives(GameManager.Instance.CurrentLives); // usa le vite reali!
+        else
+            UpdateLives(0);
+
         _timerPanel?.UpdateTimerUI(0);
     }
 

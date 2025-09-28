@@ -40,6 +40,23 @@ public class SceneLoader : MonoBehaviour
     public void LoadMainMenu()
     {
         Time.timeScale = 1f;
+
+        SaveData data = new SaveData
+        {
+            currentLevelIndex = SceneManager.GetActiveScene().buildIndex,
+            currentLives = GameManager.Instance.CurrentLives,
+            isDead = false
+        };
+
+        // Se hai un checkpoint salvato
+        if (CheckpointManager.Instance.HasCheckpoint())
+        {
+            Vector3 cpPos = CheckpointManager.Instance.GetCurrentCheckpoint().transform.position;
+            data.checkpointPos = new float[] { cpPos.x, cpPos.y, cpPos.z };
+        }
+
+        SaveManager.SaveGame(data);
+
         SceneManager.LoadScene("MainMenu");
     }
 
@@ -53,17 +70,16 @@ public class SceneLoader : MonoBehaviour
     {
         Time.timeScale = 1f;
         int nextIndex = SceneManager.GetActiveScene().buildIndex + 1;
-
         if (nextIndex < SceneManager.sceneCountInBuildSettings)
         {
-            // Salvataggio progressione
-            SaveData data = new SaveData();
-            data.currentLevelIndex = nextIndex;
-            data.currentHp = GameManager.Instance.CurrentLives; // vite globali
-            data.unlockedLevels = UnlockLevelArray(nextIndex);
+            SaveData data = new SaveData
+            {
+                currentLevelIndex = nextIndex,
+                currentLives = GameManager.Instance.CurrentLives, // vite rimaste
+                isDead = false
+            };
 
             SaveManager.SaveGame(data);
-
             SceneManager.LoadScene(nextIndex);
         }
         else
@@ -71,6 +87,7 @@ public class SceneLoader : MonoBehaviour
             LoadMainMenu();
         }
     }
+
 
     public void QuitGame()
     {
@@ -114,14 +131,4 @@ public class SceneLoader : MonoBehaviour
         }
     }
 
-    private bool[] UnlockLevelArray(int lastUnlocked)
-    {
-        int totalLevels = SceneManager.sceneCountInBuildSettings;
-        bool[] unlocked = new bool[totalLevels];
-
-        for (int i = 0; i <= lastUnlocked; i++)
-            unlocked[i] = true;
-
-        return unlocked;
-    }
 }

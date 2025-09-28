@@ -1,4 +1,4 @@
-using UnityEngine;
+﻿using UnityEngine;
 
 public class MenuManager : MonoBehaviour
 {
@@ -73,6 +73,46 @@ public class MenuManager : MonoBehaviour
         if (SceneLoader.Instance != null)
             SceneLoader.Instance.LoadMainMenu();
     }
+
+    public void NewGame()
+    {
+        SaveManager.DeleteSave();                  // elimina vecchio salvataggio
+        GameManager.Instance.ResetLivesForNewGame();
+        SceneLoader.Instance.LoadLevelByIndex(1);  // livello 1
+    }
+
+    public void ContinueGame()
+    {
+        SaveData data = SaveManager.LoadGame();
+        if (data == null)
+        {
+            NewGame();
+            return;
+        }
+
+        int levelToLoad = data.currentLevelIndex;
+
+        if (data.isDead)
+        {
+            // Se il salvataggio era in stato di morte  riparti con vite piene
+            GameManager.Instance.ResetLivesForNewGame();
+        }
+        else
+        {
+            // Se invece hai completato il livello  riparti con le vite rimaste
+            GameManager.Instance.SetLivesFromSave(data.currentLives);
+        }
+
+        // Prepara eventuale checkpoint salvato
+        if (data.checkpointPos != null && data.checkpointPos.Length == 3)
+        {
+            Vector3 savedPos = new Vector3(data.checkpointPos[0], data.checkpointPos[1], data.checkpointPos[2]);
+            CheckpointManager.Instance.SetPendingCheckpoint(savedPos);
+        }
+
+        SceneLoader.Instance.LoadLevelByIndex(levelToLoad);
+    }
+
 
 
     //MainMenu 
